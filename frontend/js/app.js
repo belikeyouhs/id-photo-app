@@ -21,6 +21,8 @@
     const customSizeInputs = document.getElementById("customSizeInputs");
     const customWidth = document.getElementById("customWidth");
     const customHeight = document.getElementById("customHeight");
+    const moreSizeSelect = document.getElementById("moreSizeSelect");
+    const sizeDropdown = document.getElementById("sizeDropdown");
 
     let selectedFile = null;
 
@@ -104,11 +106,24 @@
 
     removeBtn.addEventListener("click", clearFile);
 
-    // --- Custom Size Toggle ---
+    // --- Size Toggle ---
+    function updateSizeVisibility() {
+        var checked = document.querySelector('input[name="size"]:checked');
+        var isMore = checked && checked.value === "more";
+        moreSizeSelect.hidden = !isMore;
+        if (!isMore) {
+            customSizeInputs.hidden = true;
+        } else {
+            customSizeInputs.hidden = sizeDropdown.value !== "custom";
+        }
+    }
+
     document.querySelectorAll('input[name="size"]').forEach(function (radio) {
-        radio.addEventListener("change", function () {
-            customSizeInputs.hidden = radio.value !== "custom";
-        });
+        radio.addEventListener("change", updateSizeVisibility);
+    });
+
+    sizeDropdown.addEventListener("change", function () {
+        customSizeInputs.hidden = sizeDropdown.value !== "custom";
     });
 
     // --- Custom Color Picker ---
@@ -132,7 +147,8 @@
 
     // --- API ---
     function getSelectedParams() {
-        const size = document.querySelector('input[name="size"]:checked').value;
+        var sizeRadio = document.querySelector('input[name="size"]:checked').value;
+        var size = sizeRadio === "more" ? sizeDropdown.value : sizeRadio;
         const bg_color_radio = document.querySelector('input[name="bg_color"]:checked');
         let bg_color = bg_color_radio.value;
         if (bg_color === "custom") {

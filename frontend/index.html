@@ -59,68 +59,25 @@
                         </span>
                     </label>
                     <label class="radio-card">
-                        <input type="radio" name="size" value="small_2inch">
+                        <input type="radio" name="size" value="more">
                         <span class="radio-card__body">
-                            <span class="radio-card__name">小二寸</span>
-                            <span class="radio-card__desc">35×45mm</span>
+                            <span class="radio-card__name">更多尺寸</span>
+                            <span class="radio-card__desc">展开选择</span>
                         </span>
                     </label>
-                    <label class="radio-card">
-                        <input type="radio" name="size" value="large_1inch">
-                        <span class="radio-card__body">
-                            <span class="radio-card__name">大一寸</span>
-                            <span class="radio-card__desc">33×48mm</span>
-                        </span>
-                    </label>
-                    <label class="radio-card">
-                        <input type="radio" name="size" value="large_2inch">
-                        <span class="radio-card__body">
-                            <span class="radio-card__name">大二寸</span>
-                            <span class="radio-card__desc">35×53mm</span>
-                        </span>
-                    </label>
-                    <label class="radio-card">
-                        <input type="radio" name="size" value="passport">
-                        <span class="radio-card__body">
-                            <span class="radio-card__name">护照</span>
-                            <span class="radio-card__desc">33×48mm</span>
-                        </span>
-                    </label>
-                    <label class="radio-card">
-                        <input type="radio" name="size" value="visa_us">
-                        <span class="radio-card__body">
-                            <span class="radio-card__name">美国签证</span>
-                            <span class="radio-card__desc">51×51mm</span>
-                        </span>
-                    </label>
-                    <label class="radio-card">
-                        <input type="radio" name="size" value="visa_japan">
-                        <span class="radio-card__body">
-                            <span class="radio-card__name">日本签证</span>
-                            <span class="radio-card__desc">45×45mm</span>
-                        </span>
-                    </label>
-                    <label class="radio-card">
-                        <input type="radio" name="size" value="id_card">
-                        <span class="radio-card__body">
-                            <span class="radio-card__name">身份证</span>
-                            <span class="radio-card__desc">26×32mm</span>
-                        </span>
-                    </label>
-                    <label class="radio-card">
-                        <input type="radio" name="size" value="driver_license">
-                        <span class="radio-card__body">
-                            <span class="radio-card__name">驾驶证</span>
-                            <span class="radio-card__desc">22×32mm</span>
-                        </span>
-                    </label>
-                    <label class="radio-card">
-                        <input type="radio" name="size" value="custom">
-                        <span class="radio-card__body">
-                            <span class="radio-card__name">自定义</span>
-                            <span class="radio-card__desc">自选尺寸</span>
-                        </span>
-                    </label>
+                </div>
+                <div id="moreSizeSelect" class="more-size-select" hidden>
+                    <select id="sizeDropdown" class="size-dropdown">
+                        <option value="small_2inch">小二寸 (35×45mm)</option>
+                        <option value="large_1inch">大一寸 (33×48mm)</option>
+                        <option value="large_2inch">大二寸 (35×53mm)</option>
+                        <option value="passport">护照 (33×48mm)</option>
+                        <option value="visa_us">美国签证 (51×51mm)</option>
+                        <option value="visa_japan">日本签证 (45×45mm)</option>
+                        <option value="id_card">身份证 (26×32mm)</option>
+                        <option value="driver_license">驾驶证 (22×32mm)</option>
+                        <option value="custom">自定义尺寸</option>
+                    </select>
                 </div>
                 <div id="customSizeInputs" class="custom-size-inputs" hidden>
                     <div class="custom-size-field">
