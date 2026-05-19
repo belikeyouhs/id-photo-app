@@ -59,12 +59,78 @@
                         </span>
                     </label>
                     <label class="radio-card">
+                        <input type="radio" name="size" value="small_2inch">
+                        <span class="radio-card__body">
+                            <span class="radio-card__name">小二寸</span>
+                            <span class="radio-card__desc">35×45mm</span>
+                        </span>
+                    </label>
+                    <label class="radio-card">
+                        <input type="radio" name="size" value="large_1inch">
+                        <span class="radio-card__body">
+                            <span class="radio-card__name">大一寸</span>
+                            <span class="radio-card__desc">33×48mm</span>
+                        </span>
+                    </label>
+                    <label class="radio-card">
+                        <input type="radio" name="size" value="large_2inch">
+                        <span class="radio-card__body">
+                            <span class="radio-card__name">大二寸</span>
+                            <span class="radio-card__desc">35×53mm</span>
+                        </span>
+                    </label>
+                    <label class="radio-card">
                         <input type="radio" name="size" value="passport">
                         <span class="radio-card__body">
                             <span class="radio-card__name">护照</span>
                             <span class="radio-card__desc">33×48mm</span>
                         </span>
                     </label>
+                    <label class="radio-card">
+                        <input type="radio" name="size" value="visa_us">
+                        <span class="radio-card__body">
+                            <span class="radio-card__name">美国签证</span>
+                            <span class="radio-card__desc">51×51mm</span>
+                        </span>
+                    </label>
+                    <label class="radio-card">
+                        <input type="radio" name="size" value="visa_japan">
+                        <span class="radio-card__body">
+                            <span class="radio-card__name">日本签证</span>
+                            <span class="radio-card__desc">45×45mm</span>
+                        </span>
+                    </label>
+                    <label class="radio-card">
+                        <input type="radio" name="size" value="id_card">
+                        <span class="radio-card__body">
+                            <span class="radio-card__name">身份证</span>
+                            <span class="radio-card__desc">26×32mm</span>
+                        </span>
+                    </label>
+                    <label class="radio-card">
+                        <input type="radio" name="size" value="driver_license">
+                        <span class="radio-card__body">
+                            <span class="radio-card__name">驾驶证</span>
+                            <span class="radio-card__desc">22×32mm</span>
+                        </span>
+                    </label>
+                    <label class="radio-card">
+                        <input type="radio" name="size" value="custom">
+                        <span class="radio-card__body">
+                            <span class="radio-card__name">自定义</span>
+                            <span class="radio-card__desc">自选尺寸</span>
+                        </span>
+                    </label>
+                </div>
+                <div id="customSizeInputs" class="custom-size-inputs" hidden>
+                    <div class="custom-size-field">
+                        <label for="customWidth">宽度 (mm)</label>
+                        <input type="number" id="customWidth" min="10" max="200" step="1" placeholder="10-200">
+                    </div>
+                    <div class="custom-size-field">
+                        <label for="customHeight">高度 (mm)</label>
+                        <input type="number" id="customHeight" min="10" max="300" step="1" placeholder="10-300">
+                    </div>
                 </div>
             </div>
 

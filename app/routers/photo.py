@@ -51,11 +51,30 @@ async def generate_photo(
     file: UploadFile = File(...),
     size: str = Form("1inch"),
     bg_color: str = Form("white"),
+    custom_width_mm: float = Form(None),
+    custom_height_mm: float = Form(None),
 ):
     content = await file.read()
     _validate_upload(file, content)
 
-    if size not in PHOTO_SIZES:
+    if size == "custom":
+        if custom_width_mm is None or custom_height_mm is None:
+            raise HTTPException(
+                status_code=400,
+                detail=ErrorResponse(error="INVALID_CUSTOM_SIZE", message="自定义尺寸需要提供宽度和高度").model_dump(),
+            )
+        if not (10 <= custom_width_mm <= 200) or not (10 <= custom_height_mm <= 300):
+            raise HTTPException(
+                status_code=400,
+                detail=ErrorResponse(error="INVALID_CUSTOM_SIZE", message="尺寸范围：宽度 10-200mm，高度 10-300mm").model_dump(),
+            )
+        target_w = round(custom_width_mm * 300 / 25.4)
+        target_h = round(custom_height_mm * 300 / 25.4)
+    elif size in PHOTO_SIZES:
+        size_info = PHOTO_SIZES[size]
+        target_w = size_info["width"]
+        target_h = size_info["height"]
+    else:
         raise HTTPException(
             status_code=400,
             detail=ErrorResponse(error="INVALID_SIZE", message=f"不支持的尺寸: {size}").model_dump(),
@@ -91,8 +110,7 @@ async def generate_photo(
     pil_image = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
     processed = process_background(pil_image, bg_rgb)
 
-    size_info = PHOTO_SIZES[size]
-    result = smart_crop(processed, face["bbox"], size_info["width"], size_info["height"])
+    result = smart_crop(processed, face["bbox"], target_w, target_h)
 
     photo_id = uuid.uuid4().hex[:12]
     output_path = OUTPUT_DIR / f"{photo_id}.png"
@@ -106,7 +124,7 @@ async def generate_photo(
             face_detected=True,
             confidence=round(face["confidence"], 2),
             size=size,
-            dimensions=PhotoDimensions(width=size_info["width"], height=size_info["height"]),
+            dimensions=PhotoDimensions(width=target_w, height=target_h),
         ),
     )
 

@@ -18,6 +18,9 @@
     const downloadBtn = document.getElementById("downloadBtn");
     const regenerateBtn = document.getElementById("regenerateBtn");
     const loadingOverlay = document.getElementById("loadingOverlay");
+    const customSizeInputs = document.getElementById("customSizeInputs");
+    const customWidth = document.getElementById("customWidth");
+    const customHeight = document.getElementById("customHeight");
 
     let selectedFile = null;
 
@@ -101,6 +104,13 @@
 
     removeBtn.addEventListener("click", clearFile);
 
+    // --- Custom Size Toggle ---
+    document.querySelectorAll('input[name="size"]').forEach(function (radio) {
+        radio.addEventListener("change", function () {
+            customSizeInputs.hidden = radio.value !== "custom";
+        });
+    });
+
     // --- Custom Color Picker ---
     const customColorPicker = document.getElementById("customColorPicker");
     const customRadio = document.querySelector('input[name="bg_color"][value="custom"]');
@@ -128,22 +138,41 @@
         if (bg_color === "custom") {
             bg_color = document.getElementById("customColorPicker").value;
         }
-        return { size, bg_color };
+        let custom_width_mm = null;
+        let custom_height_mm = null;
+        if (size === "custom") {
+            custom_width_mm = parseFloat(customWidth.value);
+            custom_height_mm = parseFloat(customHeight.value);
+            if (!custom_width_mm || !custom_height_mm) {
+                throw new Error("请输入自定义宽度和高度");
+            }
+            if (custom_width_mm < 10 || custom_width_mm > 200) {
+                throw new Error("宽度范围：10-200mm");
+            }
+            if (custom_height_mm < 10 || custom_height_mm > 300) {
+                throw new Error("高度范围：10-300mm");
+            }
+        }
+        return { size, bg_color, custom_width_mm, custom_height_mm };
     }
 
     async function generatePhoto() {
         if (!selectedFile) return;
 
-        const { size, bg_color } = getSelectedParams();
-        const formData = new FormData();
-        formData.append("file", selectedFile);
-        formData.append("size", size);
-        formData.append("bg_color", bg_color);
-
-        loadingOverlay.hidden = false;
-        generateBtn.disabled = true;
-
         try {
+            const { size, bg_color, custom_width_mm, custom_height_mm } = getSelectedParams();
+            const formData = new FormData();
+            formData.append("file", selectedFile);
+            formData.append("size", size);
+            formData.append("bg_color", bg_color);
+            if (size === "custom") {
+                formData.append("custom_width_mm", custom_width_mm);
+                formData.append("custom_height_mm", custom_height_mm);
+            }
+
+            loadingOverlay.hidden = false;
+            generateBtn.disabled = true;
+
             const resp = await fetch(API_BASE + "/generate", {
                 method: "POST",
                 body: formData,
